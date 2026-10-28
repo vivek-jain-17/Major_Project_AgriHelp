@@ -1,0 +1,80 @@
+{% extends "shared/base.html" %}
+
+{% block title %}Edit Profile — AgriScheme AI{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-10">
+  <div class="bg-white p-8 rounded-2xl shadow-sm border border-neutral-200">
+    <h1 class="text-2xl font-bold text-neutral-900 mb-6">Farmer Profile</h1>
+    
+    <form method="post" class="space-y-8">
+      {% csrf_token %}
+      
+      <!-- Core Details -->
+      <div class="space-y-4">
+        <h2 class="text-lg font-semibold text-brand-800 border-b pb-2">Location & Land</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium mb-1">State</label>
+            {{ form.state }}
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">District</label>
+            {{ form.district }}
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Landholding (Acres)</label>
+            {{ form.landholding_acres }}
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Land Ownership</label>
+            {{ form.land_ownership }}
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Farmer Category</label>
+            {{ form.farmer_category }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Crops Formset -->
+      <div class="space-y-4">
+        <h2 class="text-lg font-semibold text-brand-800 border-b pb-2">Crops Grown</h2>
+        {{ formset.management_form }}
+        
+        <div id="crop-form-list" class="space-y-3">
+          {% for crop_form in formset %}
+            <div class="flex gap-4 items-end bg-neutral-50 p-4 rounded-lg border border-neutral-200">
+              <div class="flex-1">
+                <label class="block text-xs text-neutral-500 mb-1">Crop Name</label>
+                {{ crop_form.crop_name }}
+              </div>
+              <div class="w-32">
+                <label class="block text-xs text-neutral-500 mb-1">Area (Acres)</label>
+                {{ crop_form.area_acres }}
+              </div>
+              {% if formset.can_delete %}
+                <div class="pb-2">
+                  <label class="text-sm text-red-600 flex items-center gap-1 cursor-pointer">
+                    {{ crop_form.DELETE }} Remove
+                  </label>
+                </div>
+              {% endif %}
+              {% for hidden in crop_form.hidden_fields %}
+                {{ hidden }}
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+        <p class="text-xs text-neutral-500 mt-2">Note: You can add more crops later.</p>
+      </div>
+
+      <div class="pt-4 border-t flex justify-end">
+        <button type="submit" class="bg-brand-600 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-brand-700 transition">
+          Save Profile
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

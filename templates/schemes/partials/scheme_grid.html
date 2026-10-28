@@ -1,0 +1,42 @@
+<div class="mb-4 text-sm text-neutral-500">
+  Showing {{ page_obj.start_index }}–{{ page_obj.end_index }} of {{ total_count }} schemes
+  {% if query %} for "<strong>{{ query }}</strong>"{% endif %}
+</div>
+
+<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+  {% for scheme in page_obj %}
+    <a href="{% url 'scheme_detail' scheme.slug %}" class="group block bg-white border border-neutral-200 rounded-xl p-5 hover:border-brand-500 hover:shadow-md transition">
+      <div class="flex flex-wrap gap-2 mb-3">
+        {% if scheme.state %}
+          <span class="inline-block px-2 py-1 text-xs font-medium bg-brand-50 text-brand-700 rounded-md">{{ scheme.state }}</span>
+        {% endif %}
+        {% if scheme.ministry %}
+          <span class="inline-block px-2 py-1 text-xs font-medium bg-neutral-100 text-neutral-600 rounded-md">{{ scheme.ministry|truncatechars:25 }}</span>
+        {% endif %}
+      </div>
+      <h3 class="text-lg font-semibold text-neutral-900 group-hover:text-brand-700 leading-snug">{{ scheme.name|truncatechars:80 }}</h3>
+      <p class="mt-2 text-sm text-neutral-600 line-clamp-3">{{ scheme.description|default:"No description available."|truncatechars:150 }}</p>
+    </a>
+  {% empty %}
+    <div class="col-span-full text-center py-12 bg-neutral-50 rounded-xl border border-neutral-200 border-dashed">
+      <p class="text-neutral-500">No schemes found matching your search.</p>
+    </div>
+  {% endfor %}
+</div>
+
+<!-- Pagination -->
+{% if page_obj.has_other_pages %}
+<div class="mt-10 flex justify-center gap-2">
+  {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}" class="px-4 py-2 border border-neutral-300 rounded-lg text-sm hover:bg-neutral-50">Previous</a>
+  {% endif %}
+  
+  <span class="px-4 py-2 text-sm text-neutral-600">
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+  </span>
+
+  {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}" class="px-4 py-2 border border-neutral-300 rounded-lg text-sm hover:bg-neutral-50">Next</a>
+  {% endif %}
+</div>
+{% endif %}

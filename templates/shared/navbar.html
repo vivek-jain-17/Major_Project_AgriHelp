@@ -1,0 +1,28 @@
+<header class="bg-white border-b border-neutral-200">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+    <a href="{% url 'home' %}" class="flex items-center gap-2">
+      <span class="inline-block h-8 w-8 rounded-lg bg-brand-600 text-white grid place-items-center font-bold">A</span>
+      <span class="font-semibold text-lg text-brand-800">AgriScheme AI</span>
+    </a>
+          <nav class="flex items-center gap-6 text-sm text-neutral-700">
+      <a href="{% url 'home' %}" class="hover:text-brand-700">Home</a>
+      <a href="{% url 'scheme_list' %}" class="hover:text-brand-700">Browse Schemes</a> <!-- ADD THIS -->
+      
+      {% if user.is_authenticated %}
+        <span class="text-neutral-300">|</span>
+        {% if user.role == "FARMER" %}
+            <a href="{% url 'dashboard' %}" class="hover:text-brand-700 font-medium">Dashboard</a>
+        {% endif %}
+        <span class="font-medium text-brand-700">{{ user.email }}</span>
+        <form action="{% url 'logout' %}" method="post" class="inline">
+          {% csrf_token %}
+          <button type="submit" class="text-red-600 hover:text-red-700 hover:underline">Logout</button>
+        </form>
+      {% else %}
+        <span class="text-neutral-300">|</span>
+        <a href="{% url 'login' %}" class="hover:text-brand-700">Log in</a>
+        <a href="{% url 'signup' %}" class="inline-flex items-center rounded-lg bg-brand-600 text-white px-4 py-2 font-medium hover:bg-brand-700 transition">Sign up</a>
+      {% endif %}
+    </nav>
+  </div>
+</header>

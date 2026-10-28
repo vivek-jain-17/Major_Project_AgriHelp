@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}AgriScheme AI{% endblock %}</title>
+
+  <!-- Tailwind CSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50:  '#f2fbf4', 100: '#e0f5e5', 200: '#c1eacc', 300: '#92d7a7',
+              400: '#5cbb7a', 500: '#379e59', 600: '#257f45', 700: '#1e6538',
+              800: '#1b5030', 900: '#174228',
+            },
+          },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+
+  <link rel="stylesheet" href="{% static 'css/site.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="min-h-screen flex flex-col bg-neutral-50 text-neutral-900">
+
+  {% include "shared/navbar.html" %}
+
+  <main class="flex-1">
+    {% block content %}{% endblock %}
+  </main>
+
+  {% include "shared/footer.html" %}
+
+  <script src="{% static 'js/site.js' %}"></script>
+  {% block extra_body %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,32 @@
+{% extends "shared/base.html" %}
+
+{% block title %}Dashboard — AgriScheme AI{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-10">
+  <div class="bg-white p-8 rounded-2xl shadow-sm border border-neutral-200 mb-8">
+    <h1 class="text-2xl font-bold text-neutral-900 mb-2">Welcome, {{ user.first_name|default:"Farmer" }}!</h1>
+    <p class="text-neutral-600">Your profile is set up in <strong class="text-brand-700">{{ profile.state }}</strong>. Here is your farm summary.</p>
+    
+    <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="p-4 bg-brand-50 border border-brand-200 rounded-lg">
+        <p class="text-sm text-brand-800 font-medium">Landholding</p>
+        <p class="text-2xl font-bold text-brand-900">{{ profile.landholding_acres }} Acres</p>
+      </div>
+      <div class="p-4 bg-neutral-50 border border-neutral-200 rounded-lg">
+        <p class="text-sm text-neutral-600 font-medium">Crops</p>
+        <p class="text-xl font-bold text-neutral-900">{{ crops|length }}</p>
+      </div>
+      <div class="p-4 bg-neutral-50 border border-neutral-200 rounded-lg flex items-center justify-center">
+        <a href="{% url 'profile_edit' %}" class="text-brand-600 font-medium hover:underline">Edit Profile &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Placeholder for Phase 5/6 (Recommendations & Eligibility) -->
+  <div class="bg-white p-8 rounded-2xl shadow-sm border border-neutral-200 text-center py-16">
+    <h2 class="text-xl font-semibold text-neutral-800 mb-2">Recommendations coming soon</h2>
+    <p class="text-neutral-500 max-w-md mx-auto">Once the scheme database and AI retrieval engine are built, personalized schemes will appear here.</p>
+  </div>
+</div>
+{% endblock %}

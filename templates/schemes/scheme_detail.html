@@ -1,0 +1,87 @@
+{% extends "shared/base.html" %}
+
+{% block title %}{{ scheme.name }} — AgriScheme AI{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-10">
+  
+  <!-- Back Button -->
+  <a href="{% url 'scheme_list' %}" class="inline-flex items-center text-sm text-brand-600 hover:text-brand-800 font-medium mb-6">
+    &larr; Back to all schemes
+  </a>
+
+  <!-- Header -->
+  <div class="bg-white rounded-2xl shadow-sm border border-neutral-200 p-8 mb-8">
+    <div class="flex flex-wrap gap-2 mb-4">
+      {% if scheme.state %}
+        <span class="px-3 py-1 text-xs font-semibold bg-brand-100 text-brand-800 rounded-full">{{ scheme.state }}</span>
+      {% endif %}
+      {% if scheme.scheme_level %}
+        <span class="px-3 py-1 text-xs font-semibold bg-neutral-100 text-neutral-700 rounded-full">{{ scheme.get_scheme_level_display }}</span>
+      {% endif %}
+    </div>
+    
+    <h1 class="text-3xl md:text-4xl font-bold text-neutral-900 leading-tight">{{ scheme.name }}</h1>
+    
+    <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+      {% if scheme.ministry %}
+        <div><span class="text-neutral-500">Ministry:</span> <span class="font-medium">{{ scheme.ministry }}</span></div>
+      {% endif %}
+      {% if scheme.department %}
+        <div><span class="text-neutral-500">Department:</span> <span class="font-medium">{{ scheme.department }}</span></div>
+      {% endif %}
+    </div>
+
+    {% if scheme.official_url or scheme.apply_url %}
+      <div class="mt-6 flex flex-wrap gap-3">
+        {% if scheme.apply_url %}
+          <a href="{{ scheme.apply_url }}" target="_blank" rel="noopener" class="inline-flex items-center rounded-lg bg-brand-600 text-white px-5 py-2.5 font-medium hover:bg-brand-700 transition">Apply Online &rarr;</a>
+        {% endif %}
+        {% if scheme.official_url %}
+          <a href="{{ scheme.official_url }}" target="_blank" rel="noopener" class="inline-flex items-center rounded-lg border border-neutral-300 px-5 py-2.5 font-medium text-neutral-800 hover:bg-neutral-100 transition">Official Source</a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Content Sections -->
+  <div class="space-y-8">
+    
+    {% if scheme.description %}
+    <section class="bg-white rounded-2xl shadow-sm border border-neutral-200 p-8">
+      <h2 class="text-xl font-bold text-neutral-900 mb-4">Description</h2>
+      <div class="prose max-w-none text-neutral-700 leading-relaxed">{{ scheme.description|linebreaks }}</div>
+    </section>
+    {% endif %}
+
+    {% if scheme.benefits %}
+    <section class="bg-white rounded-2xl shadow-sm border border-neutral-200 p-8">
+      <h2 class="text-xl font-bold text-neutral-900 mb-4">Benefits</h2>
+      <div class="prose max-w-none text-neutral-700 leading-relaxed">{{ scheme.benefits|linebreaks }}</div>
+    </section>
+    {% endif %}
+
+    {% if scheme.eligibility_text %}
+    <section class="bg-white rounded-2xl shadow-sm border border-neutral-200 p-8">
+      <h2 class="text-xl font-bold text-neutral-900 mb-4">Eligibility Criteria</h2>
+      <div class="prose max-w-none text-neutral-700 leading-relaxed">{{ scheme.eligibility_text|linebreaks }}</div>
+    </section>
+    {% endif %}
+
+    {% if scheme.documents_required %}
+    <section class="bg-white rounded-2xl shadow-sm border border-neutral-200 p-8">
+      <h2 class="text-xl font-bold text-neutral-900 mb-4">Required Documents</h2>
+      <div class="prose max-w-none text-neutral-700 leading-relaxed">{{ scheme.documents_required|linebreaks }}</div>
+    </section>
+    {% endif %}
+
+    {% if scheme.application_process %}
+    <section class="bg-white rounded-2xl shadow-sm border border-neutral-200 p-8">
+      <h2 class="text-xl font-bold text-neutral-900 mb-4">Application Process</h2>
+      <div class="prose max-w-none text-neutral-700 leading-relaxed">{{ scheme.application_process|linebreaks }}</div>
+    </section>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}
